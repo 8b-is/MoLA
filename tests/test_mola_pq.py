@@ -66,6 +66,25 @@ class TestSonyMolaPq(unittest.TestCase):
         self.assertEqual(len(y), out_ch)
         self.assertEqual(len(y[0]), 12)
 
+    def test_quantum_san_conv1d_packet_is_12_8x_at_fan_in_128(self):
+        weights = [
+            [[math.sin(0.05 * (i + j)) for j in range(128)] for i in range(1)]
+        ]
+        layer = QuantumSANConv1dPq(weights)
+        self.assertEqual(layer.fan_in, 128)
+        self.assertEqual(layer.blocks_per_filter, 2)
+        packed_bytes = 16 * layer.blocks_per_filter + 8
+        self.assertEqual(packed_bytes, 40)
+        self.assertAlmostEqual((layer.fan_in * 4) / packed_bytes, 12.8, places=6)
+
+    def test_quantum_san_compression_approaches_16x_when_wide(self):
+        weights = [[[math.cos(0.01 * j) for j in range(512)] for _ in range(1)]]
+        layer = QuantumSANConv1dPq(weights)
+        packed_bytes = 16 * layer.blocks_per_filter + 8
+        ratio = (layer.fan_in * 4) / packed_bytes
+        self.assertGreater(ratio, 12.8)
+        self.assertLess(ratio, 16.0)
+
 
 if __name__ == "__main__":
     unittest.main()

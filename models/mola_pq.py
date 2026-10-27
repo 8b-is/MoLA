@@ -5,7 +5,7 @@ and Zero-Float `p/q` Variable-Length Pose Clipping for Real-Time Game / PlayStat
 Character Animation
 ===================================================================================
 
-Brought to you by **Chris, Hue & the 8b-is team** (https://8b.is · WhatsApp: `+1 757-614-7542`):
+Brought to you by **Chris, Hue & the 8b-is team** (https://8b.is):
   - `8b-is/alexiai` — Sovereign offline AI substrate (`GAIA-MLX-QUANT`, ternary b1.58,
     Quantum 64-Trit bitplanes, `BFP-64`, `wupz`)
   - `8b-is/Engram` — Conditional Memory via Scalable Lookup with `BFP-64` & `p/q`
@@ -24,7 +24,9 @@ What This Module Adds to Sony `MoLA` (`VAESAN` + Motion Latent Diffusion)
      **exact hardware `POPCNT` integer**:
        $$\|w_c\|_2^2 = \sum_b \text{popcnt}(\text{pos\_mask}_{c,b} \mid \text{neg\_mask}_{c,b})$$
      and the reciprocal norm $1 / \|w_c\|_2$ is computed once via integer `isqrt_u128`
-     (`Q30`), compressing `SANConv1d` weights by **`12.8x`** with zero floating-point
+     (`Q30`), compressing `SANConv1d` weights by **`12.8x`** at `fan_in = 128`
+     (`16 B` per 64-trit block + `8 B` per filter for scale and reciprocal norm;
+     the ratio approaches `16x` for wider filters), with zero floating-point
      multiplications in the 1D convolution inner loop.
 
 2. **Omni `BFP-64` Motion Latent & Pose Bank (`MotionLatentBfp64Pq`, `3.94x` smaller)**:
