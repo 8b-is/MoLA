@@ -5,7 +5,7 @@ flash_attn==2.7.4.post1
 imageio==2.9.0
 matplotlib==3.3.2
 natten==0.17.4
-numpy==1.19.2
+numpy==1.22.0
 packaging==20.4
 scipy==1.5.2
 torch==2.13.0
