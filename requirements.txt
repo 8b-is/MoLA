@@ -9,4 +9,4 @@ numpy==1.19.2
 packaging==20.4
 scipy==1.5.2
 torch==2.13.0
-tqdm==4.31.1
+tqdm==4.66.3
